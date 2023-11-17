@@ -8,11 +8,13 @@ session_start();
 // Log the user in automatically for this demo
 $_SESSION['user_id'] = 5;
 
-$db     = new Db;
-$result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
-$user   = $result->fetch_assoc();
+// $db     = new Db;
+// $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
+// $user   = $result->fetch_assoc();
+$user = [];
+error_reporting(0);
 
-$db->closeConnection();
+// $db->closeConnection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +34,7 @@ $db->closeConnection();
 
   <p>Here you can update your profile.</p>
 
-    <form action="update-profile.php" method="post" id="profile-form" onsubmit="updateProfile">
+      <form action="update-profile.php" method="post" id="profile-form" onsubmit="updateProfile(event)">
       <div class="form-group mb-3">
         <label for="currentName" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="<?php echo $user['name']; ?>" required>
@@ -51,8 +53,8 @@ $db->closeConnection();
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
     </form>
-  </div>
 
+  </div>
 
   <script>
     function updateProfile(e) {
@@ -61,9 +63,10 @@ $db->closeConnection();
       fetch('/update-profile.php', {
         method: 'post',
         headers: { 'content-type': 'application/json' },
-        credentials: true,
-        body: new FormData(document.getElementById('profile-form'))
-      }).then(console.log)
+        credentials: 'include',
+        body: new FormData(document.getElementById('profile-form')),
+      }).then(r => r.json())
+        .then(console.log)
 
       return false;
     }
