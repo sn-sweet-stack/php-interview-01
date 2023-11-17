@@ -31,6 +31,11 @@ if (!empty($data['password']) && (!isset($data['current_password']) || !password
     die('{ "status": "error", "message": "Current password is incorrect" }');
 }
 
+// encrypt the password
+if (isset($data['password'])) {
+    $data['password'] = bcrypt($data['password']);
+}
+
 unset($data['current_password']);
 
 if (empty($data['name'])) {
