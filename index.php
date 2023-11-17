@@ -14,7 +14,7 @@ $username = getenv('DB_USERNAME');
 $password = getenv('DB_PASSWORD');
 $database = getenv('DB_DATABASE');
 
-$db = new Db($host, $username, $password, $database, $port);
+$db = new Db($host, $username, $password, $database, intval($port));
 $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
 $user   = $result->fetch_assoc();
 
