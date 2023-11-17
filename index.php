@@ -32,7 +32,7 @@ $db->closeConnection();
 
   <p>Here you can update your profile.</p>
 
-    <form action="update-profile.php" method="post">
+    <form action="update-profile.php" method="post" id="profile-form" onsubmit="updateProfile">
       <div class="form-group mb-3">
         <label for="currentName" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="<?php echo $user['name']; ?>" required>
@@ -53,5 +53,18 @@ $db->closeConnection();
     </form>
   </div>
 
+
+  <script>
+    function updateProfile(e) {
+      e.preventDefault();
+
+      fetch('/update-profile.php', {
+        method: 'post',
+        headers: { 'content-type': 'application/json' },
+        credentials: true,
+        body: new FormData(document.getElementById('profile-form'))
+      }).then(console.log)
+    }
+  </script>
 </body>
 </html>
