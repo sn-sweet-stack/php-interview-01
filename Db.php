@@ -2,6 +2,8 @@
 namespace App;
 
 use function getenv;
+use function strtolower;
+use function str_starts_with;
 
 class Db
 {
@@ -61,7 +63,9 @@ class Db
         $stmt->execute();
 
         // Get the result (if it's a SELECT query)
-        $result = $stmt->get_result();
+        $result = str_starts_with(strtolower($sql), 'select')
+            ? $stmt->get_result()
+            : true;
 
         // Check if the query was successful
         if (!$result) {
