@@ -4,14 +4,15 @@ namespace App;
 class Db
 {
     private $host;
+    private $port;
     private $username;
     private $password;
     private $database;
     private $connection;
 
-    public function __construct($host, $username, $password, $database)
-    {
-        $this->host     = $host;
+    public function __construct($host, $port, $username, $password, $database) {
+        $this->host = $host;
+        $this->port = $port;
         $this->username = $username;
         $this->password = $password;
         $this->database = $database;
@@ -20,9 +21,8 @@ class Db
         $this->connect();
     }
 
-    private function connect()
-    {
-        $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
+    private function connect() {
+        $this->connection = new \mysqli($this->host, $this->username, $this->password, $this->database, $this->port);
 
         // Check connection
         if ($this->connection->connect_error) {
