@@ -8,13 +8,7 @@ session_start();
 // Log the user in automatically for this demo
 $_SESSION['user_id'] = 5;
 
-$host     = getenv('DB_HOST');
-$port     = getenv('DB_PORT');
-$username = getenv('DB_USERNAME');
-$password = getenv('DB_PASSWORD');
-$database = getenv('DB_DATABASE');
-
-$db = new Db($host, intval($port), $username, $password, $database, );
+$db     = new Db;
 $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
 $user   = $result->fetch_assoc();
 
@@ -28,16 +22,16 @@ $db->closeConnection();
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-  
+
 </head>
 <body>
 
   <div class="container mb-5">
-    
+
   <h1>Hello, <?php echo $user['name']; ?></h1>
 
   <p>Here you can update your profile.</p>
-    
+
     <form action="update-profile.php" method="post">
       <div class="form-group mb-3">
         <label for="currentName" class="form-label">Name</label>

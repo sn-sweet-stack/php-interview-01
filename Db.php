@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use function getenv;
+
 class Db
 {
     private $host;
@@ -10,12 +12,12 @@ class Db
     private $database;
     private $connection;
 
-    public function __construct($host, $port, $username, $password, $database) {
-        $this->host = $host;
-        $this->port = $port;
-        $this->username = $username;
-        $this->password = $password;
-        $this->database = $database;
+    public function __construct() {
+        $this->host     = getenv('DB_HOST');
+        $this->port     = getenv('DB_PORT');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB_PASSWORD');
+        $this->database = getenv('DB_DATABASE');
 
         // Establish a connection to the database
         $this->connect();
