@@ -26,10 +26,12 @@ $user   = $result->fetch_assoc();
 $data = $_POST;
 $updates = [];
 
-if (isset($data['password']) && (!isset($data['current_password']) || !password_verify($data['current_password'], $user['password']))) {
+if (!empty($data['password']) && (!isset($data['current_password']) || !password_verify($data['current_password'], $user['password']))) {
     // do not let the user update password
     die('{ "status": "error", "message": "Current password is incorrect" }');
 }
+
+unset($data['current_password']);
 
 if (empty($data['name'])) {
     die('{ "status": "error", "message": "Name cannot be empty" }');
@@ -49,7 +51,7 @@ foreach ($data as $field => $value) {
 
 $str_updates = implode(', ', $updates);
 
-$sql = "UPDATE users SET $updates WHERE id = {$user['id']}";
+$sql = "UPDATE users SET $str_updates WHERE id = {$user['id']}";
 
 $db->query($sql);
 

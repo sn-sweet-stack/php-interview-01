@@ -32,6 +32,8 @@ $db->closeConnection();
 
   <p>Here you can update your profile.</p>
 
+ <div class="alert-container"></div>
+    
       <form action="update-profile.php" method="post" id="profile-form" onsubmit="updateProfile(event)">
       <div class="form-group mb-3">
         <label for="currentName" class="form-label">Name</label>
@@ -60,13 +62,26 @@ $db->closeConnection();
 
       fetch('/update-profile.php', {
         method: 'post',
-        headers: { 'content-type': 'application/json' },
         credentials: 'include',
         body: new FormData(document.getElementById('profile-form')),
       }).then(r => r.json())
-        .then(console.log)
+        .then(j => {
+          if(j.status === 'error') {
+            displayErrorMessage(j.message);
+          } else {
+            displaySuccessMessage(j.message)
+          }
+        } )
 
       return false;
+    }
+
+    function displayErrorMessage(message) {
+      document.querySelector('.alert-container').innerHTML = `<div class="alert alert-danger" role="alert">${message}</div>`;
+    }
+
+    function displaySuccessMessage(message) {
+      document.querySelector('.alert-container').innerHTML = `<div class="alert alert-success" role="alert">${message}</div>`;
     }
   </script>
 </body>
