@@ -43,11 +43,11 @@ $db->closeConnection();
       </div>
       <div class="form-group mb-3">
         <label for="currentPassword" class="form-label">Current Password</label>
-        <input type="password" class="form-control" name="current_password" id="currentPassword" placeholder="Enter current password" required>
+        <input type="password" class="form-control" name="current_password" id="currentPassword" placeholder="Enter current password">
       </div>
       <div class="form-group mb-3">
         <label for="newPassword" class="form-label">New Password</label>
-        <input type="password" class="form-control" name="password" id="newPassword" placeholder="Enter new password" required>
+        <input type="password" class="form-control" name="password" id="newPassword" placeholder="Enter new password">
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
     </form>
