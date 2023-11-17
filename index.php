@@ -8,13 +8,11 @@ session_start();
 // Log the user in automatically for this demo
 $_SESSION['user_id'] = 5;
 
-// $db     = new Db;
-// $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
-// $user   = $result->fetch_assoc();
-$user = [];
-error_reporting(0);
+$db     = new Db;
+$result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
+$user   = $result->fetch_assoc();
 
-// $db->closeConnection();
+$db->closeConnection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
