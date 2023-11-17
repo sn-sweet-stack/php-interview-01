@@ -64,6 +64,8 @@ $db->closeConnection();
         credentials: true,
         body: new FormData(document.getElementById('profile-form'))
       }).then(console.log)
+
+      return false;
     }
   </script>
 </body>
