@@ -33,7 +33,7 @@ if (!empty($data['password']) && (!isset($data['current_password']) || !password
 
 // encrypt the password
 if (isset($data['password'])) {
-    $data['password'] = bcrypt($data['password']);
+    $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
 }
 
 unset($data['current_password']);
