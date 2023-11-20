@@ -19,12 +19,13 @@ namespace App;
 require_once('vendor/autoload.php');
 session_start();
 
+// assume the user is already logged in
 $db     = new Db;
 $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
 $user   = $result->fetch_assoc();
 
 $data = $_POST;
-$updates = [];
+$updates = "";
 
 if (!empty($data['password']) && (!isset($data['current_password']) || !password_verify($data['current_password'], $user['password']))) {
     // do not let the user update password
@@ -50,13 +51,16 @@ if (!preg_match('/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/', $data['email'])) {
     die('{ "status": "error", "message": "Email is invalid" }');
 }
 
+$countFields = 0;
 foreach ($data as $field => $value) {
-    $updates[] = "$field = '$value'";
+    $updates .= "$field = '$value'";
+    $countFields++;
+    if ($countFields < count($data)) {
+      $updates .= ", ";
+    }
 }
 
-$str_updates = implode(', ', $updates);
-
-$sql = "UPDATE users SET $str_updates WHERE id = {$user['id']}";
+$sql = "UPDATE users SET $updates WHERE id = {$user['id']}";
 
 $db->query($sql);
 
