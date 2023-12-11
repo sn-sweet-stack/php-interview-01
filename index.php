@@ -14,6 +14,7 @@ $user   = $result->fetch_assoc();
 
 $db->closeConnection();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
