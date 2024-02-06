@@ -17,10 +17,8 @@
 namespace App;
 
 require_once('vendor/autoload.php');
-session_start();
 
-// Log the user automatically for this demo - this is ok
-$_SESSION['user_id'] = 5;
+(new Session)->start();
 
 $db     = new Db;
 $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
