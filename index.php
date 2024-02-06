@@ -1,12 +1,9 @@
 <?php
 
-use App\Db;
+namespace App;
 
 require 'vendor/autoload.php';
-session_start();
-
-// Log the user in automatically for this demo
-$_SESSION['user_id'] = 5;
+(new Session)->start();
 
 $db     = new Db;
 $result = $db->query('SELECT * FROM `users` WHERE `id` = ?', [$_SESSION['user_id']]);
